@@ -1,0 +1,12 @@
+<div class="payment-box">
+  <h2>Scan & Pay (UPI)</h2>
+
+  <img src="qrcode.jpeg" alt="Elite eSports Payment QR" class="qr">
+
+  <p><strong>Name:</strong> Lokesh S</p>
+  <p><strong>UPI ID:</strong> 7200416641@naviaxis</p>
+
+  <button class="btn" onclick="alert('Payment Successful! Please wait for confirmation.')">
+    I Have Paid
+  </button>
+</div>
