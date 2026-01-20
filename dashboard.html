@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<style>
+body{background:black;color:white;font-family:Arial}
+.card{
+  width:90%;max-width:500px;margin:20px auto;padding:15px;
+  background:#0b0b0b;border-radius:15px;
+  box-shadow:0 0 15px red;
+}
+button{padding:8px;margin-top:10px;background:red}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h3>REGISTERED TEAMS</h3>
+<div id="list"></div>
+
+<input id="tname" placeholder="Team Name">
+<select id="res">
+<option>Qualified</option>
+<option>Eliminated</option>
+<option>Winner</option>
+<option>Runner-Up</option>
+</select>
+
+<button onclick="saveResult()">SAVE RESULT</button>
+<button onclick="clearAll()">CLEAR ALL</button>
+</div>
+
+<script>
+if(localStorage.getItem("admin")!=="yes"){
+ location.href="index.html";
+}
+
+let teams=JSON.parse(localStorage.getItem("teams"))||[];
+function show(){
+ let h="";
+ teams.forEach((t,i)=>{
+  h+=`${i+1}. ${t.team} - ${t.result||"Pending"}<br>`;
+ });
+ list.innerHTML=h;
+}
+show();
+
+function saveResult(){
+ let t=teams.find(x=>x.team==tname.value);
+ if(!t){alert("Team not found");return;}
+ t.result=res.value;
+ localStorage.setItem("teams",JSON.stringify(teams));
+ show();
+}
+
+function clearAll(){
+ if(confirm("Clear all data?")){
+  localStorage.clear();
+  location.href="index.html";
+ }
+}
+</script>
+
+</body>
+</html>
