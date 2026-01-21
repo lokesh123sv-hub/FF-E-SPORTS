@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>FF E-SPORTS</title>
+<style>
+body{
+  margin:0;
+  background:black;
+  color:white;
+  font-family:Arial;
+}
+.card{
+  width:350px;
+  margin:80px auto;
+  padding:25px;
+  background:#0b0b0b;
+  border-radius:15px;
+  box-shadow:0 0 20px red;
+  text-align:center;
+}
+button{
+  width:100%;
+  padding:12px;
+  margin-top:12px;
+  background:red;
+  color:black;
+  border:none;
+  border-radius:8px;
+  font-weight:bold;
+  cursor:pointer;
+}
+.admin{
+  background:black;
+  color:red;
+  border:1px solid red;
+}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>FREE FIRE E-SPORTS</h2>
+<p>Entry ₹40 | Re-Entry ₹50</p>
+<p>🏆 Winner ₹400 | Runner ₹200</p>
+<p id="slots"></p>
+
+<button id="regBtn" onclick="location.href='register.html'">REGISTER</button>
+<button class="admin" onclick="location.href='admin.html'">ADMIN LOGIN</button>
+</div>
+
+<div class="card">
+<h3>COUNTDOWN</h3>
+<div class="timer">
+<span id="d"></span>
+<span id="h"></span>
+<span id="m"></span>
+<span id="s"></span>
+</div>
+</div> 
+
+<script>
+let teams = JSON.parse(localStorage.getItem("teams")) || [];
+document.getElementById("slots").innerText =
+`Slots Filled: ${teams.length}/30`;
+
+if(teams.length>=30){
+  document.getElementById("regBtn").disabled=true;
+  document.getElementById("regBtn").innerText="SLOTS FULL";
+}
+</script>
+<script>
+let end=new Date("Feb 14,2026 11:00").getTime();
+setInterval(()=>{
+ let n=new Date().getTime(),t=end-n;
+ if(t<0)return;
+ d.innerText=Math.floor(t/86400000)+"D";
+ h.innerText=Math.floor(t%86400000/3600000)+"H";
+ m.innerText=Math.floor(t%3600000/60000)+"M";
+ s.innerText=Math.floor(t%60000/1000)+"S";
+},1000);
+</script>
+
+</body>
+</html>

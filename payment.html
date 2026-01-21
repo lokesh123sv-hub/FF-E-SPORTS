@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Payment Page</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:black;
+    font-family:Segoe UI, Arial;
+}
+
+.payment-box{
+    background:#0b0b0b;
+    width:90%;
+    max-width:420px;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 0 25px red;
+    text-align:center;
+}
+
+h2{color:white;}
+p{color:#ccc;}
+
+.qr{
+    width:200px;
+    margin:20px 0;
+    border-radius:10px;
+}
+
+input[type=file]{
+    width:100%;
+    padding:10px;
+    background:#111;
+    color:white;
+    border:1px solid red;
+    border-radius:8px;
+    margin-bottom:20px;
+}
+
+button{
+    width:100%;
+    padding:14px;
+    background:#00c853;
+    color:white;
+    border:none;
+    border-radius:10px;
+    font-size:17px;
+    cursor:pointer;
+    box-shadow:0 0 15px #00c853;
+}
+</style>
+</head>
+
+<body>
+
+<div class="payment-box">
+    <h2>PAY ENTRY FEE</h2>
+    <p>Entry ₹40 | Re-entry ₹50</p>
+
+    <img src="qr.png" class="qr">
+
+    <p>Upload Payment Screenshot</p>
+    <input type="file" id="proof" required>
+
+    <button onclick="confirmPayment()">CONFIRM PAYMENT</button>
+</div>
+
+<script>
+function confirmPayment(){
+    const file = document.getElementById("proof").value;
+    if(file === ""){
+        alert("Please upload payment screenshot!");
+        return;
+    }
+    window.location.href = "success.html";
+}
+</script>
+
+</body>
+</html>
