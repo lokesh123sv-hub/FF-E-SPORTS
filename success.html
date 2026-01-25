@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Success</title>
+<style>
+*{box-sizing:border-box;font-family:Arial}
+body{
+ margin:0;height:100vh;
+ display:flex;justify-content:center;align-items:center;
+ background:black;
+}
+.card{
+ width:360px;background:#0a0a0a;padding:30px;
+ border-radius:15px;box-shadow:0 0 25px #22c55e;
+ text-align:center;color:white;
+}
+.tick{font-size:60px;color:#22c55e}
+</style>
+</head>
+<body>
+
+<div class="card">
+<div class="tick">✔</div>
+<h2 id="teamName"></h2>
+<p>Registration Successful<br>Match details via WhatsApp</p>
+<p id="timer"></p>
+<button onclick="location.href='index.html'">HOME</button>
+<button onclick="location.href='rules.pdf'">RULES</button>
+</div>
+
+<script>
+const t=JSON.parse(localStorage.getItem("lastRegistered"));
+teamName.innerHTML="Team: "+(t?.team||"");
+
+const matchTime=new Date("2026-02-01 18:00:00").getTime();
+setInterval(()=>{
+ let d=matchTime-new Date().getTime();
+ if(d<=0){timer.innerHTML="MATCH STARTED";return;}
+
+ let h=Math.floor(d/(1000*60*60));
+ let m=Math.floor((d%(1000*60*60))/(1000*60));
+ let s=Math.floor((d%(1000*60))/1000);
+ timer.innerHTML=`Match starts in ${h}h ${m}m ${s}s`;
+},1000);
+</script>
+
+</body>
+</html>

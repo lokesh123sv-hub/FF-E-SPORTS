@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Payment</title>
+<style>
+*{box-sizing:border-box;font-family:Arial}
+body{
+  margin:0;height:100vh;display:flex;
+  justify-content:center;align-items:center;
+  background:black;
+}
+.card{
+  width:360px;background:#0a0a0a;padding:25px;
+  border-radius:15px;
+  box-shadow:0 0 20px red;
+  color:white;text-align:center;
+}
+img{width:200px;border:2px solid red;border-radius:10px}
+input,button{
+  width:100%;padding:12px;margin-top:15px;
+  border-radius:8px;
+}
+input{background:black;border:1px solid red;color:white}
+button{background:red;border:none;color:white}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>SCAN & PAY</h2>
+<img src="qr.png"><br><br>
+<p>Scan QR & upload payment screenshot</p>
+<input type="file" id="ss" accept="image/*" required>
+<button onclick="submitPay()">SUBMIT</button>
+</div>
+
+<script>
+if(!localStorage.getItem("currentTeam")){
+ alert("Invalid Access");
+ window.location.href="register.html";
+}
+
+function submitPay(){
+ const file=ss.files[0];
+ if(!file){alert("Upload screenshot");return;}
+
+ const reader=new FileReader();
+ reader.onload=function(){
+  let team=JSON.parse(localStorage.getItem("currentTeam"));
+  team.image=reader.result;
+
+  let teams=JSON.parse(localStorage.getItem("teams"))||[];
+  teams.push(team);
+
+  localStorage.setItem("teams",JSON.stringify(teams));
+  localStorage.setItem("lastRegistered",JSON.stringify(team));
+  localStorage.removeItem("currentTeam");
+
+  window.location.href="success.html";
+ }
+ reader.readAsDataURL(file);
+}
+</script>
+</body>
+</html>

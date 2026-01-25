@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Dashboard</title>
+<style>
+*{box-sizing:border-box;font-family:Arial}
+body{margin:0;background:black;color:white;padding:20px}
+button{padding:8px 12px;border:none;border-radius:6px}
+.red{background:red;color:white}
+.orange{background:orange;color:black}
+table{width:100%;border-collapse:collapse;margin-top:20px}
+th,td{border:1px solid red;padding:8px;text-align:center}
+tbody tr{
+ background:#0a0a0a;
+ box-shadow:0 0 10px red;
+ transition:0.3s;
+}
+tbody tr:hover{box-shadow:0 0 20px red}
+img{width:80px;border-radius:5px}
+select{background:black;color:white;border:1px solid red}
+</style>
+</head>
+<body>
+
+<script>
+if(localStorage.getItem("adminAuth")!=="true"){
+ location.href="admin.html";
+}
+</script>
+
+<h2>ADMIN DASHBOARD</h2>
+<button class="red" onclick="logout()">LOGOUT</button>
+<button class="orange" onclick="clearAll()">CLEAR ALL</button>
+<button class="orange" onclick="exportCSV()">EXPORT CSV</button>
+
+<table>
+<thead>
+<tr>
+<th>Team</th><th>Player</th><th>UID</th>
+<th>WhatsApp</th><th>Screenshot</th><th>Status</th>
+</tr>
+</thead>
+<tbody id="data"></tbody>
+</table>
+
+<script>
+let teams=JSON.parse(localStorage.getItem("teams"))||[];
+function load(){
+ data.innerHTML="";
+ teams.forEach((t,i)=>{
+  data.innerHTML+=`
+  <tr>
+   <td>${t.team}</td>
+   <td>${t.player}</td>
+   <td>${t.uid}</td>
+   <td>${t.whatsapp}</td>
+   <td><img src="${t.image}"></td>
+   <td>
+    <select onchange="setStatus(${i},this.value)">
+     <option ${t.status=="Pending"?"selected":""}>Pending</option>
+     <option ${t.status=="Winner"?"selected":""}>Winner</option>
+     <option ${t.status=="Runner-up"?"selected":""}>Runner-up</option>
+     <option ${t.status=="Eliminated"?"selected":""}>Eliminated</option>
+    </select>
+   </td>
+  </tr>`;
+ });
+}
+function setStatus(i,v){
+ teams[i].status=v;
+ localStorage.setItem("teams",JSON.stringify(teams));
+}
+function clearAll(){
+ if(confirm("Clear all registrations?")){
+  localStorage.removeItem("teams");
+  teams=[];load();
+ }
+}
+function exportCSV(){
+ let csv="Team,Player,UID,WhatsApp,Status\n";
+ teams.forEach(t=>{
+  csv+=`${t.team},${t.player},${t.uid},${t.whatsapp},${t.status}\n`;
+ });
+ let a=document.createElement("a");
+ a.href=URL.createObjectURL(new Blob([csv]));
+ a.download="registrations.csv";
+ a.click();
+}
+function logout(){
+ localStorage.removeItem("adminAuth");
+ location.href="admin.html";
+}
+load();
+</script>
+</body>
+</html>

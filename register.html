@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Team Register</title>
+<style>
+*{box-sizing:border-box;font-family:Arial}
+body{
+  margin:0;height:100vh;display:flex;
+  justify-content:center;align-items:center;
+  background:black;
+}
+.card{
+  width:360px;background:#0a0a0a;padding:25px;
+  border-radius:15px;
+  box-shadow:0 0 20px red;
+  color:white;text-align:center;
+}
+input,button{
+  width:100%;padding:12px;margin-top:12px;
+  border-radius:8px;
+}
+input{background:black;border:1px solid red;color:white}
+button{background:red;border:none;color:white}
+</style>
+</head>
+<body>
+
+<div class="card">
+<h2>TEAM REGISTER</h2>
+<form onsubmit="nextPage(event)">
+<input id="team" placeholder="Team Name" required>
+<input id="player" placeholder="Player Name" required>
+<input id="uid" placeholder="FF UID" required>
+<input id="whatsapp" placeholder="WhatsApp Number" required>
+<button>NEXT</button>
+</form>
+</div>
+
+<script>
+function nextPage(e){
+ e.preventDefault();
+ const data={
+  team:team.value,
+  player:player.value,
+  uid:uid.value,
+  whatsapp:whatsapp.value,
+  image:"",
+  status:"Pending"
+ };
+ localStorage.setItem("currentTeam",JSON.stringify(data));
+ window.location.href="payment.html";
+}
+</script>
+</body>
+</html>
